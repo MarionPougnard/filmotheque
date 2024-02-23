@@ -1,0 +1,24 @@
+<input th:type="${hidden}" th:name="${id}" th:value="${sessionID}">
+<p class="wrapper-rating">
+    <input th:name="${note}" id="note_0" th:value="${-1}" type="radio" checked autofocus>
+    <span class="star">
+        <input th:field="*{note}" th:name="${note}" th:id="${note_1}" th:value="${1}" type="radio">
+        <label th:for="${note_1}" title="Très mauvaise"><img th:src="@{/assets/star.svg}"></label>
+        <span class="star">
+          <input th:field="*{note}" th:name="${note}" id="note_2" th:value="${2}" type="radio">
+          <label for="note_2" title="Médiocre"><svg><use href="#star"></use></svg></label>
+          <span class="star">
+            <input th:field="*{note}" th:name="${note}" id="note_3" th:value="${3}" type="radio">
+            <label for="note_3" title="Moyenne"><svg><use href="#star"></use></svg></label>
+            <span class="star">
+              <input th:field="*{note}" th:name="${note}" id="note_4" th:value="${4}" type="radio">
+              <label for="note_4" title="Bonne"><svg><use href="#star"></use></svg></label>
+              <span class="star">
+                <input th:field="*{note}" th:name="${note}" id="note_5" th:value="${5}" type="radio">
+                <label for="note_5" title="Excellente"><svg><use href="#star"></use></svg></label>
+              </span>
+            </span>
+          </span>
+        </span>
+      </span>
+</p>

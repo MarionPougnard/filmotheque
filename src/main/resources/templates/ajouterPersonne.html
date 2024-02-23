@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>AjouterPersonne</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div th:replace="~{fragments/personneFragment :: champs(${isMembre}, ${personne}, ${personnes}, ${personneEdit})}"></div>
+</main>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Films</title>
+</head>
+</head>
+<body>
+    <header th:replace="~{fragments/header}"></header>
+    <main layout:fragment="content">
+        <div class="row d-flex justify-content-center m-5">
+            <form method="get" th:action="@{/films}" th:object="${parametresRecherche}" class="row g-4" role="search">
+                <div class="col-md-3 text-center">
+                    <select class="form-select" th:field="*{idRealisateur}">
+                        <option value="">--Par Réalisateur--</option>
+                        <option th:each="realisateur : ${participants}"
+                                th:value="${realisateur.id}"
+                                th:text="|${realisateur.prenom} ${realisateur.nom}|">
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select  th:class="form-select" th:field="*{idActeur}" required>
+                        <option  value="">--Par Acteur--</option>
+                        <option th:each="acteur : ${participants}"
+                                th:value="${acteur.id}"
+                                th:text="|${acteur.prenom} ${acteur.nom}|">
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select  th:class="form-select" th:field="*{idGenre}">
+                        <option value="">--Par Genre--</option>
+                        <option th:each="genre : ${genres}"
+                                th:value="${genre.id}"
+                                th:text="${genre.titre}">
+                        </option>
+                    </select>
+                </div>
+                <button class="btn btn-success end-0 btn-sm me-1 col-md-1" type="submit">🔍</button>
+            </form>
+        </div>
+        <h1>Les films de l'ENI</h1>
+        <a sec:authorize="hasRole('admin')" th:href="@{/films/ajouterFilm}" class="btn btn-info">Ajouter un film</a>
+        <table class="table table-striped">
+            <thead>
+                <tr class="table-dark">
+                    <th>Genre</th>
+                    <th>Année</th>
+                    <th>Titre</th>
+                    <th>Réalisateur</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="film : ${listeFilms}">
+                    <td th:text="${film.getGenre().getTitre()}" />
+                    <td th:text="${film.getAnnee()}" />
+                    <td  >
+                        <a th:href="@{|/films/${film.id}|}" th:text="${film.getTitre()}"></a>
+                    </td>
+                    <td th:text="|${film.getRealisateur().getPrenom()} ${film.getRealisateur().getNom()}|" />
+                    <td>
+                        <a sec:authorize="isAuthenticated()" th:href="@{|/films/${film.id}/avis|}" class="btn btn-info">Avis</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </main>
+</body>
+</html>

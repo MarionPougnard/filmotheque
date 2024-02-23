@@ -1,0 +1,20 @@
+<form class="detailFilm"  th:object="${avis}" method="post" th:action="@{|/films/${film.id}/avis|}">
+    <fieldset >
+        <h1 th:text="|Ajouter un avis au film : ${film.titre}|"></h1>
+        <div class="mb-3 row ps-2 pe-2">
+            <label class="col-sm-2 col-form-label">Note :</label>
+            <div class="col-sm-10">
+<!--                <input th:field="*{note}" class="form-control" min="0" max="5" type="text"/>-->
+                <div th:replace="~{fragments/etoileFragment}"></div>
+            </div>
+        </div>
+
+        <div class="mb-3 row  ps-2 pe-2">
+            <label class="col-sm-2 col-form-label align-middle">Commentaire :</label>
+            <div class="col-sm-10">
+                <textarea th:field="*{commentaire}" class="form-control" maxlength="250"></textarea>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-info">Enregistrer</button>
+    </fieldset>
+</form>

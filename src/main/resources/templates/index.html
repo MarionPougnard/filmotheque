@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/layout}" >
+<head>
+    <title>Accueil</title>
+</head>
+<body>
+    <main layout:fragment="content">
+        <h2 class="text-center mt-5" >Voici la bibliothèque des Films de ENI Ecole</h2>
+        <div class="centre">
+            <div  class="btn-group centre" role="group" aria-label="Basic example">
+                <a  sec:authorize="hasRole('admin')" th:href="@{/ajouterPersonne/Membre}" class="btn btn-outline-info">Ajouter un membre</a>
+                <a  sec:authorize="hasRole('admin')" th:href="@{/films/ajouterFilm}" class="btn btn-outline-info">Ajouter un film</a>
+                <a  sec:authorize="hasRole('admin')" th:href="@{/ajouterGenre}" class="btn btn-outline-info">Ajouter un genre</a>
+                <a  sec:authorize="hasRole('admin')" th:href="@{/ajouterPersonne/Participant}" class="btn btn-outline-info">Ajouter un participant</a>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>

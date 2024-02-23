@@ -1,0 +1,90 @@
+<form class="detailFilm" th:fragment="champs (isDisabled, isEmpty)" th:object="${film}" method="post"
+      th:action="@{/films/ajouterFilm}" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <fieldset th:disabled="${isDisabled}">
+        <h1 th:text="${isEmpty ? 'Création du film' : 'Détail du film'}"></h1>
+        <div class="mb-3 row ps-2 pe-2">
+            <label class="col-sm-2 col-form-label">Genre :</label>
+            <div class="col-sm-10">
+                <select th:class="${isEmpty ? 'form-select' : 'form-control'}" th:field="*{genre}">
+<!--                    <option th:if="${isEmpty}" value="" selected disabled>Sélectionner le genre</option>-->
+                    <option th:each="g : ${genres}"
+                            th:value="${g.id}"
+                            th:text="${g.titre}">
+                    </option>
+                </select>
+                <span class="error"  th:errors="*{genre}"></span>
+                <a th:if="${isEmpty}" sec:authorize="hasRole('admin')" th:href="@{/ajouterGenre}" class="btn btn-info">Ajouter un genre</a>
+            </div>
+        </div>
+        <div class="mb-3 row ps-2 pe-2">
+            <label class="col-sm-2 col-form-label">Année :</label>
+            <div class="col-sm-10">
+                <input class="form-control" th:field="*{annee}" />
+                <span class="error"  th:errors="*{annee}"></span>
+            </div>
+        </div>
+        <div class="mb-3 row ps-2 pe-2">
+            <label class="col-sm-2 col-form-label">titre :</label>
+            <div class="col-sm-10">
+                <input class="form-control" th:field="*{titre}" />
+                <span class="error"  th:errors="*{titre}"></span>
+            </div>
+        </div>
+        <div class="mb-3 row  ps-2 pe-2">
+            <label class="col-sm-2 col-form-label">Réalisateur :</label>
+            <div class="col-sm-10">
+                <select  th:class="${isEmpty ? 'form-select' : 'form-control'}" th:field="*{realisateur}" required>
+<!--                    <option th:if="${isEmpty}" value="null" selected>Sélectionner le.la réalisateur.rice</option>-->
+                    <option th:each="realisateur : ${participants}"
+                            th:value="${realisateur.id}"
+                            th:text="|${realisateur.prenom} ${realisateur.nom}|">
+                    </option>
+                </select>
+                <span class="error"  th:errors="*{realisateur}"></span>
+            </div>
+        </div>
+        <div class="mb-3 row  ps-2 pe-2">
+            <label class="col-sm-2 col-form-label">Durée :</label>
+            <div class="col-sm-10">
+                <input class="form-control" th:field="*{duree}" />
+                <span class="error"  th:errors="*{duree}"></span>
+            </div>
+        </div>
+        <div class="mb-3 row  ps-2 pe-2">
+            <label class="col-sm-2 col-form-label align-middle">Acteur(s) :</label>
+            <div class="col-sm-10">
+                <select multiple th:if="${isEmpty}" class="form-select" th:field="*{acteurs}">
+                    <option value="" selected disabled>Sélectionner un.e ou plusieurs acteur.rice.s</option>
+                    <option th:each="acteur : ${participants}"
+                            th:value="${acteur.id}"
+                            th:text="|${acteur.prenom} ${acteur.nom}|">
+                    </option>
+                </select>
+                <span th:each="acteur :${film.acteurs}">
+                     <input th:if="${!isEmpty}" th:value="|${acteur.prenom} ${acteur.nom}|" class="form-control">
+                </span>
+                <span class="error"  th:errors="*{acteurs}"></span>
+            </div>
+        </div>
+        <div class="mb-3 row  ps-2 pe-2">
+            <label class="col-sm-2 col-form-label align-middle">Synopsis :</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" th:field="*{synopsis}" th:text="${isEmpty ? '' : film.synopsis}"></textarea>
+                <span class="error"  th:errors="*{synopsis}"></span>
+            </div>
+        </div>
+        <div th:if="${!isEmpty}" class="mb-3 row  ps-2 pe-2">
+            <label class="col-sm-2 col-form-label align-middle">Avis :</label>
+            <div  class="col-sm-10">
+                <span th:each="avis :${film.avis}" >
+                    <input th:value="|${avis.membre.prenom} ${avis.note} : ${avis.commentaire}|" class="form-control"/>
+                    <span class="error"  th:errors="*{avis}"></span>
+
+                </span>
+            </div>
+        </div>
+
+        <button th:if="${!isDisabled}" type="submit" sec:authorize="hasRole('admin')" class="btn btn-info">Enregistrer</button>
+    </fieldset>
+    <a th:if="${!isEmpty}" sec:authorize="isAuthenticated()" th:href="@{|/films/${film.id}/avis|}" class="btn btn-info">Ajouter un avis</a>
+</form>

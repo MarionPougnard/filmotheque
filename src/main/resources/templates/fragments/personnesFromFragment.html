@@ -1,0 +1,59 @@
+<table class="table table-striped" th:fragment="champs (isMembre, personnes, personneEdit)" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <thead>
+    <tr class="table-dark">
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th th:if="${isMembre}">Pseudo</th>
+        <th th:if="${isMembre}" >Mot de Passe</th>
+        <th th:if="${isMembre}">Administrateur</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="personne : ${personnes}">
+        <section th:if="${personneEdit?.id != personne.id}">
+            <td th:text="${personne.prenom}" />
+            <td th:text="${personne.nom}" />
+            <td th:if="${isMembre}" th:text="${personne.pseudo}" />
+            <td th:if="${isMembre}" th:text="${personne.motDePasse}" />
+            <td th:if="${isMembre}" th:text="${personne.admin}" />
+            <td>
+                <a sec:authorize="hasRole('admin')" class="btn btn-warning" th:href="|?edit=${personne.id}|">modifier</a>
+            </td>
+            <td>
+                <form method="post" th:action="@{|/ajouterPersonne/${isMembre ? 'Membre' : 'Participant'}/${personne.id}/supprimer|}">
+                    <button sec:authorize="hasRole('admin')" class="btn btn-danger">X</button>
+                </form>
+            </td>
+        </section>
+        <section th:if="${personneEdit?.id == personne.id}"> //section en vue édition
+            <form  method="post" th:action="@{|/ajouterPersonne/${isMembre ? 'Membre' : 'Participant'}|}" th:object="${personneEdit}">
+                <!-- afin qu'il y ait une modification qui soit faite sur la personne, il faut ajouter un paramètre supplémentaire <input type="hidden"> avec l'id pour qu'il n'y ai pas de création de personne -->
+                <input type="hidden" th:field="*{id}">
+                <td>
+                    <input type="text" th:field="*{prenom}">
+                </td>
+                <td>
+                    <input type="text" th:field="*{nom}">
+                </td>
+                <td th:if="${isMembre}">
+                    <input type="text" th:field="*{pseudo}">
+                    <!-- on affiche les erreurs éventuelles (notamment si le pseudo est déjà pris) -->
+                    <span class="error" th:error="*{pseudo}"></span>
+                </td>
+                <td th:if="${isMembre}">
+                    <input type="password" th:field="*{motDePasse}">
+                </td>
+                <td th:if="${isMembre}">
+                    <input type="checkbox" th:field="*{admin}">
+                </td>
+                <td>
+                    <button sec:authorize="hasRole('admin')" class="btn btn-succes" >✔</button>
+                    <a sec:authorize="hasRole('admin')" class="btn btn-danger" th:href="@{|/ajouterPersonne/${isMembre ? 'Membre' : 'Participant'}|}">↲</a>
+                </td>
+            </form>
+        </section>
+    </tr>
+    </tbody>
+</table>

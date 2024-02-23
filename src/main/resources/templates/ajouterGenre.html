@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Genre</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <table class="table table-striped">
+        <thead>
+        <tr class="table-dark">
+            <th>Genre</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="genre : ${genres}">
+            <form th:action="@{/ajouterGenre}" method="post" th:object="${genreEdit}" th:if="${genreEdit?.id == genre.id}">
+                <td >
+                    <input type="hidden" th:field="*{id}">
+                    <input type="text" th:field="*{titre}">
+                <td>
+                    <button sec:authorize="hasRole('admin')" class="btn btn-success" >✔</button>
+                </td>
+                <td>
+                    <a sec:authorize="hasRole('admin')" class="btn btn-danger" th:href="@{/ajouterGenre}">↲</a>
+                </td>
+
+                </td>
+            </form>
+
+            <div th:if="${genreEdit?.id != genre.id}">
+                <td th:text="${genre.titre}" />
+                <td>
+                    <a sec:authorize="hasRole('admin')" class="btn btn-warning" th:href="|?edit=${genre.id}|">modifier</a>
+                </td>
+                <td>
+                    <form method="get" th:action="@{|/ajouterGenre/${genre.id}/supprimer|}">
+                        <button sec:authorize="hasRole('admin')" class="btn btn-danger">X</button>
+                    </form>
+                </td>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:replace="~{fragments/genreFragment :: champs(true)}"></div>
+</main>
+</body>
+</html>

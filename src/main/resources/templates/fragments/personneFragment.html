@@ -1,0 +1,43 @@
+<form class="detailFilm"    th:fragment="champs (isMembre, personne, personnes, personneEdit)"
+                            th:object="${personne}"
+                            method="post"
+                            th:action="@{${isMembre ? '/ajouterPersonne/Membre' : '/ajouterPersonne/Participant'}}">
+    <fieldset >
+        <span th:if="${not #lists.isEmpty(personnes)}">
+            <div th:replace="~{fragments/personnesFromFragment :: champs(${isMembre}, ${personnes}, ${personneEdit})}"></div>
+        </span>
+        <h1 th:text="${isMembre ? 'Ajouter un membre' : 'Ajouter un participant'}"></h1>
+        <div class="mb-3 row ps-2 pe-2">
+            <label class="col-sm-2 col-form-label">Prénom :</label>
+            <div class="col-sm-10">
+                <input th:field="*{prenom}" class="form-control" min="0" max="5" type="text"/>
+            </div>
+        </div>
+
+        <div class="mb-3 row  ps-2 pe-2">
+            <label class="col-sm-2 col-form-label align-middle">Nom :</label>
+            <div class="col-sm-10">
+                <input th:field="*{nom}" class="form-control" maxlength="250" />
+            </div>
+        </div>
+        <div th:if="${isMembre}" class="mb-3 row  ps-2 pe-2">
+            <label class="col-sm-2 col-form-label align-middle">Pseudo :</label>
+            <div class="col-sm-10">
+                <textarea th:field="*{pseudo}" class="form-control" maxlength="250"></textarea>
+            </div>
+        </div>
+        <div th:if="${isMembre}" class="mb-3 row  ps-2 pe-2">
+            <label class="col-sm-2 col-form-label align-middle">Mot de Passe :</label>
+            <div class="col-sm-10">
+                <textarea th:field="*{motDePasse}" class="form-control" maxlength="250"></textarea>
+            </div>
+        </div>
+        <div th:if="${isMembre}" class="form-check">
+            <label class="form-check-label" for="flexRadioDefault1">
+                Admnistrateur
+            </label>
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+        </div>
+        <button type="submit" class="btn btn-info">Enregistrer</button>
+    </fieldset>
+</form>

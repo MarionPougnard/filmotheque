@@ -1,0 +1,109 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+header {
+    border-bottom: 1px solid grey;
+    box-shadow: 0 6px 2px -2px lightgrey;
+    display: flex;
+    padding: 12px 32px;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    align-items: center;
+
+}
+header a {
+    text-decoration: none;
+    font-weight: bold;
+    color: grey;
+}
+
+
+.detailFilm {
+    border-radius: 6px;
+    background-color: lightgrey;
+    margin: 0 10px;
+}
+
+table {
+    border-radius: 6px;
+}
+
+footer {
+    background-color: grey;
+    height: 45px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+footer div {
+    padding: 2px;
+    color: white;
+    font-weight: bold;
+    background-color: dimgrey;
+}
+
+.form-control .avis {
+    color: black;
+}
+
+.error {
+    color: red;
+}
+
+.wrapper-rating {
+    font-size: 3em;
+    line-height: 0;
+    margin: 0;
+    --coulFillHover: #FD0;            /* couleur de fond au survol */
+    --coulFillSelected: #FFC;         /* couleur de fond selected */
+    --coulStrokeHover: #F00;          /* couleur de bord au survol */
+    --coulStrokeSelected: #FA0;       /* couleur de bord selected */
+}
+.wrapper-rating label {
+    cursor: pointer;
+    border-bottom: 2px solid currentColor;
+}
+.wrapper-rating input {
+    position: absolute;
+    opacity: 0;
+}
+.wrapper-rating input:checked ~ * label {
+    --coulFillSelected: #FAFAFA;      /* couleur de fond par défaut */
+    --coulStrokeSelected: #CCC;       /* couleur de bord par défaut */
+    border-bottom: 2px solid transparent;
+}
+.wrapper-rating .star {
+    display: inline-flex;
+    color: var(--coulStrokeSelected);
+    cursor: pointer;
+}
+.wrapper-rating .star svg {
+    width: 1em;
+    height: 1em;
+    transition: .25s;
+    stroke-width: 1;
+    stroke: var(--coulStrokeSelected);
+    fill: var(--coulFillSelected);
+}
+.wrapper-rating .star:hover > label svg {
+    fill: var(--coulFillHover);
+    stroke: var(--coulStrokeSelected);
+}
+
+.centre {
+    display: flex;
+    justify-content: center;
+}

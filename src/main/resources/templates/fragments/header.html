@@ -1,0 +1,21 @@
+<header th:fragment="header">
+    <div>
+        <img th:src="@{/assets/logoFilmotheque.png}" >
+        <a th:href="@{/}">Filmothèque</a>
+    </div>
+    <div>
+        <form method="get" th:action="@{/films}" class="d-flex" role="search">
+            <input class="form-control me-2" type="search" th:name="search"  th:value="${param.search}" placeholder="Search" aria-label="Search">
+            <button class="btn btn-success" type="submit">🔍</button>
+        </form>
+    </div>
+    <div xmlns:sec="http://www.w3.org/1999/xhtml">
+        <a th:href="@{/films}">Films</a>
+        <a th:href="@{/login}" sec:authorize="!isAuthenticated()" class="btn btn-info">Connection</a>
+        <a th:href="@{/login}" class="btn btn-info">S'inscrire</a>
+        <form th:action="@{/logout}" sec:authorize="isAuthenticated()" method="post">
+            <button class="btn btn-info" th:text="Déconnection"/>
+        </form>
+
+    </div>
+</header>
