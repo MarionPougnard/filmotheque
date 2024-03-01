@@ -1,6 +1,7 @@
 package fr.eni.tp.filmotheque.bo;
 
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,8 +12,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Membre extends Personne {
-
+    @NotNull(message = "le pseudo est obligatoire")
     private String pseudo;
+    @NotNull(message = "le mot de passe est obligatoire")
     @ToString.Exclude
     private String motDePasse;
     private boolean admin = false;

@@ -2,9 +2,6 @@ package fr.eni.tp.filmotheque.bll;
 
 import fr.eni.tp.filmotheque.bo.Avis;
 import fr.eni.tp.filmotheque.bo.Film;
-import fr.eni.tp.filmotheque.bo.Genre;
-import fr.eni.tp.filmotheque.bo.Participant;
-import fr.eni.tp.filmotheque.dal.GenreRepository;
 import fr.eni.tp.filmotheque.dto.ParametresRecherche;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +15,10 @@ public interface FilmService {
   Film consulterFilmParId(long id);
 
   void creerFilm(Film film);
+
+  void deleteFilm(long id); //supprimer un film
+
+  void putFilm(Film film); //modifier un film
 
  void publierAvis(Avis avis, long idFilm);
 

@@ -13,4 +13,6 @@ public interface GenreService {
 
     void supprimerGenreParId(Long id);
 
+    void putGenre(Genre genre);
+
 }

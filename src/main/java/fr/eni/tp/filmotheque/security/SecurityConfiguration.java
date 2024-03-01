@@ -20,6 +20,9 @@ import java.util.List;
 public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // on ignore la vérification csrf sur les requêtes d'API (pas de risque car pas de Cookies)
+        http.csrf( (csrf) -> csrf.ignoringRequestMatchers("/api/**"));
+
         http.authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/avis").authenticated()
                         .requestMatchers("/ajouterFilm").hasRole("admin")

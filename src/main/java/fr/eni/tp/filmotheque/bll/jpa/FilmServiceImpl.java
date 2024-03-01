@@ -7,7 +7,9 @@ import fr.eni.tp.filmotheque.dal.FilmRepository;
 import fr.eni.tp.filmotheque.dto.ParametresRecherche;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -40,9 +42,27 @@ public class FilmServiceImpl implements FilmService{
         filmRepository.save(film);
     }
 
+    @Override
+    public void deleteFilm(long id) {
+        if (filmRepository.findById(id).isPresent()){
+            filmRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "le film n'existe pas");
+        }
+    }
+
+    @Override
+    public void putFilm(Film film) {
+        if (filmRepository.existsById(film.getId())){
+            filmRepository.save(film);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "le film n'existe pas");
+        }
+    }
 
     @Override
     public void publierAvis(Avis avis, long idFilm) {
+        avisRepository.save(avis);
         Film filmSelectionne = consulterFilmParId(idFilm);
         if (filmSelectionne != null) {
             filmSelectionne.getAvis().add(avis);

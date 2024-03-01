@@ -5,7 +5,10 @@ import fr.eni.tp.filmotheque.bo.Genre;
 import fr.eni.tp.filmotheque.dal.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -32,7 +35,21 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public void supprimerGenreParId(Long id) {
-        genreRepository.deleteById(id);
+        if (genreRepository.existsById(id)){
+            genreRepository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le genre n'a pas été trouvé");
+        }
+
+    }
+
+    @Override
+    public void putGenre(Genre genre) {
+        if (genreRepository.existsById(genre.getId())){
+            genreRepository.save(genre);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Le genre n'a pas été trouvé");
+        }
     }
 
 }

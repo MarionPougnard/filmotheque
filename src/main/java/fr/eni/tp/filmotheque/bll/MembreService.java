@@ -14,4 +14,6 @@ public interface MembreService {
     Membre creerMembre(Membre membre);
 
     void supprimerMembreParId(Long id);
+
+    void putMembre(Membre membre);
 }

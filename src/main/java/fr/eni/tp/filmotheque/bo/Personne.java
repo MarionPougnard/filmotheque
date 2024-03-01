@@ -1,6 +1,7 @@
 package fr.eni.tp.filmotheque.bo;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,9 @@ public abstract class Personne {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
+    @NotNull(message = "le nom est obligatoire")
     private String nom;
+    @NotNull(message = "le prenom est obligatoire")
     private String prenom;
 
     public Personne(String nom, String prenom) {
